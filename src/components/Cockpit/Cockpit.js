@@ -1,30 +1,53 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import classes from './Cockpit.module.css';
 
-const cockpit = ( props ) => {
-    const assignedClasses = [];
-    let btnClass = '';
-    if (props.showPersons) {
-        btnClass = classes.Red;
-    }
+const Cockpit = (props) => {
 
-    if ( props.persons.length <= 2 ) {
-      assignedClasses.push( classes.red ); // classes = ['red']
-    }
-    if ( props.persons.length <= 1 ) {
-      assignedClasses.push( classes.bold ); // classes = ['red', 'bold']
-    }
+  useEffect(() => {
+    console.log('[Cockpit.js] useEffect everytime')
+  })
 
-    return (
-        <div className={classes.Cockpit}>
-            <h1>{props.title}</h1>
-            <p className={assignedClasses.join( ' ' )}>This is really working!</p>
-            <button
-                className={btnClass}
-                onClick={props.clicked}>Toggle Persons</button>
-        </div>
-    );
+  useEffect(() => {
+    console.log('[Cockpit.js] useEffect depending on a data')
+  }, [props.persons])
+
+  useEffect(() => {
+    console.log('[Cockpit.js] useEffect only first time')
+  }, [])
+
+  useEffect(() => {
+    console.log('[Cockpit.js] useEffect demonstrate cleanup')
+    return () => {
+      console.log('[Cockpit.js] useEffect cleanup done')
+    }
+  }, [])
+
+  const assignedClasses = [];
+  let btnClass = classes.toggleButton;
+  if (props.showPersons) {
+    btnClass += ' ' + classes.Red;
+  }
+
+  if (props.personsLength <= 2) {
+    assignedClasses.push(classes.red); // classes = ['red']
+  }
+  if (props.personsLength <= 1) {
+    assignedClasses.push(classes.bold); // classes = ['red', 'bold']
+  }
+
+  return (
+    <div className={classes.Cockpit}>
+      <h1>{props.title}</h1>
+      <p className={assignedClasses.join(' ')}>This will change color according to list's length!</p>
+      <button
+        className={btnClass}
+        onClick={props.clicked}>Toggle Persons</button>
+      <button
+        className={classes.addButton}
+        onClick={props.addPersonHandler}>Add Persons</button>
+    </div>
+  );
 };
 
-export default cockpit;
+export default React.memo(Cockpit);

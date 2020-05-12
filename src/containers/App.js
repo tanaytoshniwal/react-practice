@@ -17,7 +17,8 @@ class App extends Component {
       { id: 'asdf11', name: 'Stephanie', age: 26 }
     ],
     otherState: 'some other value',
-    showPersons: false
+    showPersons: false,
+    showCockpit: true
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -25,12 +26,21 @@ class App extends Component {
     return state;
   }
 
-  componentWillMount() {
-    console.log('[App.js] componentWillMount');
-  }
+  // componentWillMount() {
+  //   console.log('[App.js] componentWillMount');
+  // }
 
   componentDidMount() {
     console.log('[App.js] componentDidMount');
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log('[App.js] shouldComponentUpdate')
+    return true
+  }
+
+  componentDidUpdate() {
+    console.log('[App.js] componentDidUpdate')
   }
 
   nameChangedHandler = (event, id) => {
@@ -64,6 +74,30 @@ class App extends Component {
     this.setState({ showPersons: !doesShow });
   };
 
+  makeid = (length) => {
+    let result = '';
+    let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  }
+
+  addPersonHandler = () => {
+    let name = prompt('Enter name:')
+    let age = prompt('Enter age:')
+    if (name === null || (age === null && Number.isInteger(age))) {
+      alert('Incorrect Input')
+    }
+    let persons = [...this.state.persons]
+    let new_obj = { id: this.makeid(Math.random() * 5), name: name, age: age }
+    persons.push(new_obj)
+    this.setState({
+      persons: persons
+    })
+  }
+
   render() {
     console.log('[App.js] render');
     let persons = null;
@@ -80,12 +114,15 @@ class App extends Component {
 
     return (
       <div className={classes.App}>
-        <Cockpit
+        <h1>{this.props.title}</h1>
+        <button className={classes.toggleButton} onClick={() => { this.setState({ showCockpit: !this.state.showCockpit }) }}>Toggle Cockpit</button>
+        {this.state.showCockpit ? <Cockpit
           title={this.props.appTitle}
           showPersons={this.state.showPersons}
-          persons={this.state.persons}
+          personsLength={this.state.persons.length}
           clicked={this.togglePersonsHandler}
-        />
+          addPersonHandler={this.addPersonHandler}
+        /> : null}
         {persons}
       </div>
     );

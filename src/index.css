@@ -1,0 +1,7 @@
+* {
+    font-family: 'Muli', sans-serif;
+}
+body {
+    background: linear-gradient( rgba(120, 120, 120, 0.5), rgba(120, 120, 120, 0.5) ), url('./assets/background.jpg') center / cover;
+    background-size: cover;
+}
