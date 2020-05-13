@@ -1,9 +1,9 @@
 import React from 'react';
-
+import PropTypes from 'prop-types'
 import Person from './Person/Person';
 
 class Persons extends React.Component {
-    
+
     // static getDerivedStateFromProps(props, state) {
     //     console.log('[Persons.js] getDerivedStateFromProps')
     //     return state
@@ -28,17 +28,23 @@ class Persons extends React.Component {
     render() {
         console.log('[Persons.js] rendering...');
         return this.props.persons.map((person, index) => {
-          return (
-            <Person
-              delete={() => this.props.delete(index)}
-              name={person.name}
-              age={person.age}
-              key={person.id}
-              changed={event => this.props.changed(event, person.id)}
-            />
-          );
+            return (
+                <Person
+                    delete={() => this.props.delete(index)}
+                    name={person.name}
+                    age={person.age}
+                    key={person.id}
+                    changed={event => this.props.changed(event, person.id)}
+                />
+            );
         });
     }
+}
+
+Persons.propTypes = {
+    persons: PropTypes.array,
+    delete: PropTypes.func,
+    changed: PropTypes.func
 }
 
 export default Persons;

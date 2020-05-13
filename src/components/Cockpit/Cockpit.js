@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-
+import PropTypes from 'prop-types';
 import classes from './Cockpit.module.css';
 
 const Cockpit = (props) => {
@@ -49,5 +49,13 @@ const Cockpit = (props) => {
     </div>
   );
 };
+
+Cockpit.propTypes = {
+  title: PropTypes.string,
+  showPersons: PropTypes.bool,
+  personsLength: PropTypes.number,
+  clicked: PropTypes.func,
+  addPersonHandler: PropTypes.func
+}
 
 export default React.memo(Cockpit);

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import classes from './App.module.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
+import Wrapper from '../hoc/Wrapper';
 
 class App extends Component {
   constructor(props) {
@@ -70,8 +71,7 @@ class App extends Component {
   };
 
   togglePersonsHandler = () => {
-    const doesShow = this.state.showPersons;
-    this.setState({ showPersons: !doesShow });
+    this.setState((prevState, props) => { return { showPersons: !prevState.showPersons } });
   };
 
   makeid = (length) => {
@@ -113,9 +113,9 @@ class App extends Component {
     }
 
     return (
-      <div className={classes.App}>
+      <Wrapper className={classes.App}>
         <h1>{this.props.title}</h1>
-        <button className={classes.toggleButton} onClick={() => { this.setState({ showCockpit: !this.state.showCockpit }) }}>Toggle Cockpit</button>
+        <button className={classes.toggleButton} onClick={() => { this.setState((prevState, props) => { return { showCockpit: !prevState.showCockpit } }) }}>Toggle Cockpit</button>
         {this.state.showCockpit ? <Cockpit
           title={this.props.appTitle}
           showPersons={this.state.showPersons}
@@ -124,7 +124,7 @@ class App extends Component {
           addPersonHandler={this.addPersonHandler}
         /> : null}
         {persons}
-      </div>
+      </Wrapper>
     );
   }
 }
