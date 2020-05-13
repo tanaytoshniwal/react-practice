@@ -1,8 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import classes from './Cockpit.module.css';
+import AuthContext from '../../context/AuthContext';
 
 const Cockpit = (props) => {
+
+  const toggleButtonRef = useRef(null)
+
+  const authContext = useContext(AuthContext)
 
   useEffect(() => {
     console.log('[Cockpit.js] useEffect everytime')
@@ -18,6 +23,7 @@ const Cockpit = (props) => {
 
   useEffect(() => {
     console.log('[Cockpit.js] useEffect demonstrate cleanup')
+    toggleButtonRef.current.click()
     return () => {
       console.log('[Cockpit.js] useEffect cleanup done')
     }
@@ -41,6 +47,10 @@ const Cockpit = (props) => {
       <h1>{props.title}</h1>
       <p className={assignedClasses.join(' ')}>This will change color according to list's length!</p>
       <button
+        className={classes.addButton}
+        onClick={authContext.login}>{authContext.authenticated ? "Logout" : "Login"}</button>
+      <button
+        ref={toggleButtonRef}
         className={btnClass}
         onClick={props.clicked}>Toggle Persons</button>
       <button

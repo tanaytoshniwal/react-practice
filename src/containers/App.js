@@ -4,6 +4,7 @@ import classes from './App.module.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import Wrapper from '../hoc/Wrapper';
+import AuthContext from '../context/AuthContext';
 
 class App extends Component {
   constructor(props) {
@@ -19,7 +20,8 @@ class App extends Component {
     ],
     otherState: 'some other value',
     showPersons: false,
-    showCockpit: true
+    showCockpit: true,
+    authenticated: false
   };
 
   static getDerivedStateFromProps(props, state) {
@@ -84,6 +86,14 @@ class App extends Component {
     return result;
   }
 
+  loginHandler = () => {
+    this.setState((prevState, props) => {
+      return {
+        authenticated: !prevState.authenticated
+      }
+    })
+  }
+
   addPersonHandler = () => {
     let name = prompt('Enter name:')
     let age = prompt('Enter age:')
@@ -116,14 +126,19 @@ class App extends Component {
       <Wrapper className={classes.App}>
         <h1>{this.props.title}</h1>
         <button className={classes.toggleButton} onClick={() => { this.setState((prevState, props) => { return { showCockpit: !prevState.showCockpit } }) }}>Toggle Cockpit</button>
-        {this.state.showCockpit ? <Cockpit
-          title={this.props.appTitle}
-          showPersons={this.state.showPersons}
-          personsLength={this.state.persons.length}
-          clicked={this.togglePersonsHandler}
-          addPersonHandler={this.addPersonHandler}
-        /> : null}
-        {persons}
+        <AuthContext.Provider value={{
+          authenticated: this.state.authenticated,
+          login: this.loginHandler
+        }}>
+          {this.state.showCockpit ? <Cockpit
+            title={this.props.appTitle}
+            showPersons={this.state.showPersons}
+            personsLength={this.state.persons.length}
+            clicked={this.togglePersonsHandler}
+            addPersonHandler={this.addPersonHandler}
+          /> : null}
+          {persons}
+        </AuthContext.Provider>
       </Wrapper>
     );
   }
