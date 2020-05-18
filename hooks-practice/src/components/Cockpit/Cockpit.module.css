@@ -1,0 +1,47 @@
+.red {
+  color: #BA2F16;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.toggleButton {
+  margin: 5px;
+  border-radius: 5px;
+  border: 1px solid rgba(18, 18, 18, .75);
+  padding: 5px 10px;
+  box-shadow: 0 2px 3px #ccc;
+  transition-duration: .5s;
+  background-color: #019031;
+  font: inherit;
+  color: white;
+  cursor: pointer;
+}
+
+.addButton {
+  margin: 5px;
+  border-radius: 5px;
+  border: 1px solid rgba(18, 18, 18, .75);
+  padding: 5px 10px;
+  box-shadow: 0 2px 3px #ccc;
+  transition-duration: .5s;
+  font: inherit;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background-color: rgba(120, 120, 120, .75);
+}
+
+.toggleButton:hover {
+  background-color: #45CE30;
+}
+
+.toggleButton.Red {
+  background-color: #BA2F16;
+}
+
+.toggleButton.Red:hover {
+  background-color: #FF4848;
+}
