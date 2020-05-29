@@ -1,4 +1,4 @@
-import { STORE, REMOVE } from "../actions"
+import { STORE, REMOVE } from "../actions/actionTypes"
 
 const initialState = {
     results: []

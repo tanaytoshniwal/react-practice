@@ -8,12 +8,15 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import counterReducer from './store/reducers/counter'
 import resultsReducer from './store/reducers/results'
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 
 const rootRecuder = combineReducers({
     ctr: counterReducer,
     res: resultsReducer
 })
 
+
+// LOGGER MIDDLEWARE
 const logger = store => {
     return next => {
         return action => {
@@ -28,7 +31,7 @@ const logger = store => {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-const store = createStore(rootRecuder, composeEnhancers(applyMiddleware(logger)))
+const store = createStore(rootRecuder, composeEnhancers(applyMiddleware(logger, thunk)))
 
 ReactDOM.render(
     <Provider store={store}>
