@@ -4,6 +4,7 @@
 /hooks-practice/node_modules
 /http-practice/node_modules
 /redux-practice/node_modules
+/webpack-react/node_modules
 /.pnp
 .pnp.js
 
